@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Insights - School Website</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<div class="container">
+    <h1>Performance Insights</h1>
+    <div th:if="${role == 'PRINCIPAL'}">
+        <h2>Subject-wise Averages</h2>
+        <canvas id="subjectAveragesChart" width="400" height="200"></canvas>
+        <script th:inline="javascript">
+            /*<![CDATA[*/
+            var labels = [[${subjectLabels}]];
+            var data = [[${subjectAverages}]];
+            new Chart(document.getElementById('subjectAveragesChart'), {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Average Marks',
+                        data: data,
+                        backgroundColor: '#003366'
+                    }]
+                }
+            });
+            /*]]>*/
+        </script>
+    </div>
+    <div th:if="${role == 'TEACHER'}">
+        <h2>Your Classes - Student Performance</h2>
+        <table>
+            <tr>
+                <th>Student</th>
+                <th>Subject</th>
+                <th>Marks</th>
+            </tr>
+            <tr th:each="mark : ${marks}">
+                <td th:text="${mark.student.name}"></td>
+                <td th:text="${mark.subject}"></td>
+                <td th:text="${mark.marks}"></td>
+            </tr>
+        </table>
+    </div>
+    <div th:if="${role == 'STUDENT'}">
+        <h2>Your Marks</h2>
+        <table>
+            <tr>
+                <th>Subject</th>
+                <th>Your Marks</th>
+                <th>Class Topper</th>
+                <th>Class Average</th>
+            </tr>
+            <tr th:each="mark : ${marks}">
+                <td th:text="${mark.subject}"></td>
+                <td th:text="${mark.marks}"></td>
+                <td th:text="${mark.topper}"></td>
+                <td th:text="${mark.average}"></td>
+            </tr>
+        </table>
+        <a th:href="@{/report/download}" class="btn">Download Report Card (PDF)</a>
+    </div>
+</div>
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

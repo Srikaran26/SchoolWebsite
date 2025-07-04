@@ -1,0 +1,23 @@
+<!-- fragments/header.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+<header th:fragment="header">
+    <div>
+        <img th:src="@{/images/logo.png}" alt="School Logo" style="height:40px;">
+        <span style="font-size:1.5rem; margin-left:1rem;">School Website</span>
+    </div>
+    <nav>
+        <a th:href="@{/}">Home</a>
+        <a th:href="@{/admissions}">Admissions</a>
+        <a th:href="@{/events}">Events</a>
+        <a th:href="@{/announcements}">Announcements</a>
+        <a th:href="@{/insights}" sec:authorize="hasAnyRole('PRINCIPAL','TEACHER','STUDENT')">Insights</a>
+        <a th:href="@{/admin}" sec:authorize="hasRole('ADMIN')">Admin</a>
+        <a th:href="@{/logout}" sec:authorize="isAuthenticated()">Logout</a>
+        <a th:href="@{/login}" sec:authorize="isAnonymous()">Login</a>
+    </nav>
+</header>
+</body>
+</html>

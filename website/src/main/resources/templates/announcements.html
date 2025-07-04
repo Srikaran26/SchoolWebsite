@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Announcements - School Website</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<div class="container">
+    <h1>Announcements</h1>
+    <ul>
+        <li th:each="announcement : ${announcements}">
+            <b th:text="${announcement.title}"></b> -
+            <span th:text="${announcement.content}"></span>
+            <span style="font-size:0.9em;color:#888;" th:text="${#temporals.format(announcement.postedAt, 'dd MMM yyyy HH:mm')}"></span>
+        </li>
+    </ul>
+</div>
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

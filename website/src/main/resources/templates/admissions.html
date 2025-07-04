@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admissions - School Website</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<div class="container">
+    <h1>Admissions</h1>
+    <form th:action="@{/admissions/apply}" th:object="${admissionForm}" method="post">
+        <label>Name:</label>
+        <input th:field="*{name}" required>
+        <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color:red"></div>
+
+        <label>Admitted Into:</label>
+        <input th:field="*{admittedInto}" required>
+        <div th:if="${#fields.hasErrors('admittedInto')}" th:errors="*{admittedInto}" style="color:red"></div>
+
+        <label>Previous Class:</label>
+        <input th:field="*{previousClass}" required>
+        <div th:if="${#fields.hasErrors('previousClass')}" th:errors="*{previousClass}" style="color:red"></div>
+
+        <button class="btn" type="submit">Apply</button>
+        <div th:if="${successMessage}" th:text="${successMessage}" style="color:green"></div>
+    </form>
+
+    <h2>Your Applications</h2>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Admitted Into</th>
+            <th>Status</th>
+        </tr>
+        <tr th:each="admission : ${admissions}">
+            <td th:text="${admission.name}"></td>
+            <td th:text="${admission.admittedInto}"></td>
+            <td th:text="${admission.status}"></td>
+        </tr>
+    </table>
+</div>
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>
