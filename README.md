@@ -1,4 +1,4 @@
-# School Website – Full Stack Spring Boot + Thymeleaf Project
+# School Website – Full Stack Project
 
 A role-based, modern school website with a Spring Boot backend and a Thymeleaf-based frontend, supporting admissions, events, announcements, analytics, and more.
 
